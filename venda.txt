@@ -1,0 +1,2 @@
+banana | 5 | frutas | caio | marcos | 3 | 28/03/2026
+banana | 5 | frutas | caio | marcos | 3 | 28/03/2026
