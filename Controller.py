@@ -57,6 +57,10 @@ class ControllerCategoria:
                 arq.writelines(i.categoria)
                 arq.writelines('\n')
 
-a = ControllerCategoria()
-a.cadastrarCategoria('Frutas')
-a.alterarCategoria('Carnes', 'Legumes')
+    def mostrarCategoria(self):
+        categorias = DaoCategoria.ler()
+        if len(categorias) == 0:
+            print('Não existem categorias!')
+        else:
+            for i in categorias:
+                print(f'Categoria: {i.categoria}')
