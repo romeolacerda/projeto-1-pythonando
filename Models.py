@@ -22,7 +22,7 @@ class Venda:
         self.vendedor = vendedor
         self.comprador = comprador
         self.quantidadeVendida = quantidadeVendida
-        self.date = data
+        self.data = data
 
 class Fornecedor:
     def __init__(self, nome, cnpj, telefone, categoria):
