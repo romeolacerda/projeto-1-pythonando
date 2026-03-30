@@ -1,6 +1,6 @@
 
 from DAO import DaoCategoria, DaoEstoque
-from Models import Categoria, Produtos
+from Models import Categoria, Estoque, Produtos
 
 
 class ControllerCategoria:
@@ -100,3 +100,23 @@ class ControllerEstoque:
                 arq.writelines(i.produto.nome + " | " + i.produto.preco + " | " + i.produto.categoria + " | " + str(i.quantidade))
                 arq.writelines('\n')
 
+    def alterarProduto(self, nomeAlterar, novoNome, novoPreco, novaCategoria, novaQuantidade):
+        x = DaoEstoque.ler()
+        y = DaoCategoria.ler()
+        h = list(filter(lambda x: x.categoria == novaCategoria, y))
+        if len(h) > 0:
+            est = list(filter(lambda x: x.produto.nome == nomeAlterar, x))
+            if len(est) > 0:
+                est = list(filter(lambda x: x.produto.nome == novoNome, x))
+                if len(est) == 0:
+                    x = list(map(lambda x: Estoque(Produtos(novoNome, novoPreco, novaCategoria), novaQuantidade) if(x.produto.nome == nomeAlterar) else(x), x))
+                else:
+                    print('Produto ja cadastradado')
+            with open('estoque.txt', 'w') as arq:
+                for i in x: 
+                    arq.writelines(i.produto.nome + " | " + i.produto.preco + " | " + i.produto.categoria + " | " + str(i.quantidade))
+                    arq.writelines('\n')
+                print('Produto alterado com sucesso')
+                
+        else:
+            print('O produto que deseja alterar não existe')
