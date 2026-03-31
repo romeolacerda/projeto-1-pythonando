@@ -120,3 +120,16 @@ class ControllerEstoque:
                 
         else:
             print('O produto que deseja alterar não existe')
+
+    def mostrarEstoque(self):
+        estoque = DaoEstoque.ler()
+        if len(estoque) == 0:
+            print('estoque vazio')
+        else: 
+            print("======Produto======")
+            for i in estoque:
+                print(f'Nome: {i.produto.nome}\n'
+                f'Preco: {i.produto.preco}\n'
+                f'Categoria: {i.produto.categoria}\n'
+                f'Quantidade: {i.quantidade}')
+                print("----------")
