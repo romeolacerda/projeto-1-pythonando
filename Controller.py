@@ -1,6 +1,6 @@
 
-from DAO import DaoCategoria, DaoEstoque
-from Models import Categoria, Estoque, Produtos
+from DAO import DaoCategoria, DaoEstoque, DaoVenda
+from Models import Categoria, Estoque, Produtos, Venda
 
 
 class ControllerCategoria:
@@ -133,3 +133,44 @@ class ControllerEstoque:
                 f'Categoria: {i.produto.categoria}\n'
                 f'Quantidade: {i.quantidade}')
                 print("----------")
+
+class CadastrarVenda:
+ def cadastrarVenda(self, nomeProduto, vendedor, comprador, quantidadeVendida):
+        x = DaoEstoque.ler()
+        temp = []
+        existe = False
+        quantidade = False
+        for i in x:
+            if not existe:
+                if i.produto.nome == nomeProduto:
+                    existe = True
+                    if i.quantidade >= quantidadeVendida:
+                        quantidade = True
+                        i.quantidade = int(i.quantidade) - int(quantidadeVendida)
+
+                        vendido = Venda(Produtos(i.produto.nome, i.produto.preco, i.produto.categoria), vendedor, comprador, quantidadeVendida)
+
+                        valorCompra = int(quantidadeVendida) * int(i.produto.preco)
+
+                        DaoVenda.salvar(vendido)
+
+            temp.append(Estoque(Produtos(i.produto.nome, i.produto.preco, i.produto.categoria), i.quantidade))
+
+        arq = open('estoque.txt', 'w')
+        arq.write("")
+
+
+        for i in temp:
+            with open('estoque.txt', 'a') as arq:
+                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
+                arq.writelines('\n')
+
+        if not existe:
+            print('O produto nao exite')
+            return None
+        elif not quantidade:
+            print('A quantidade vendida não contem em estoque')
+            return None
+        else:
+            print('Venda realizada com sucesso')
+            return valorCompra
