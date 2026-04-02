@@ -97,7 +97,7 @@ class ControllerEstoque:
 
         with open('estoque.txt', 'w') as arq:
             for i in x:
-                arq.writelines(i.produto.nome + " | " + i.produto.preco + " | " + i.produto.categoria + " | " + str(i.quantidade))
+                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
                 arq.writelines('\n')
 
     def alterarProduto(self, nomeAlterar, novoNome, novoPreco, novaCategoria, novaQuantidade):
@@ -114,7 +114,7 @@ class ControllerEstoque:
                     print('Produto ja cadastradado')
             with open('estoque.txt', 'w') as arq:
                 for i in x: 
-                    arq.writelines(i.produto.nome + " | " + i.produto.preco + " | " + i.produto.categoria + " | " + str(i.quantidade))
+                    arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
                     arq.writelines('\n')
                 print('Produto alterado com sucesso')
                 
