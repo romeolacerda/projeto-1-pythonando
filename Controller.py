@@ -134,8 +134,8 @@ class ControllerEstoque:
                 f'Quantidade: {i.quantidade}')
                 print("----------")
 
-class CadastrarVenda:
- def cadastrarVenda(self, nomeProduto, vendedor, comprador, quantidadeVendida):
+class ControllerVenda:
+    def cadastrarVenda(self, nomeProduto, vendedor, comprador, quantidadeVendida):
         x = DaoEstoque.ler()
         temp = []
         existe = False
@@ -174,3 +174,28 @@ class CadastrarVenda:
         else:
             print('Venda realizada com sucesso')
             return valorCompra
+        
+    def relatorioDeProdutos(self):
+        vendas = DaoVenda.ler()
+        produtos = []
+        for i in vendas:
+            nome = i.itensVendido.nome
+            quantidade = i.quantidadeVendida
+            tamanho = list(filter(lambda x: x['produto'] == nome, produtos))
+            if len(tamanho)>0:
+                produtos = list(map(lambda x: {'produto': nome, 'quantidade': x['quantidade'] + quantidade} 
+                if (x['produto'] == nome) else (x), produtos))
+            else:
+                produtos.append({'produto': nome, 'quantidade': quantidade})
+
+            ordenado = sorted(produtos, key=lambda k: k['quantidade'], reverse=True)
+
+            print('Esses são os produtos mais vendidods')
+            a = 1
+            for i in ordenado:
+                print(f'=========== Produto {a} ==========')
+                print(f"Produto: {i['produto']}\n"
+                      f"Quantidade: {i['quantidade']}\n")
+                a += 1
+
+a = ControllerVenda()
