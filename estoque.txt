@@ -1,1 +1,1 @@
-maca | 6 | Frutas | 30
+maca|6|Frutas|27

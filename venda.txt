@@ -1,2 +1,3 @@
 banana | 5 | frutas | caio | marcos | 3 | 28/03/2026
 banana | 5 | frutas | caio | marcos | 3 | 28/03/2026
+maca | 6 | Frutas | joao | caop | 3 | 02/04/2026

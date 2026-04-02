@@ -27,7 +27,7 @@ class DaoVenda:
     def salvar(cls, venda: Venda):
         with open('venda.txt', 'a') as arq:
             arq.writelines(venda.itensVendido.nome + " | " + venda.itensVendido.preco + " | " +
-                           venda.itensVendido.categoria + " | " + venda.vendededor + " | " +
+                           venda.itensVendido.categoria + " | " + venda.vendedor + " | " +
                            venda.comprador + " | " + str(venda.quantidadeVendida) + " | " + venda.data)
             arq.writelines('\n')
 

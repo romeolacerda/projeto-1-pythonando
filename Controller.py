@@ -183,19 +183,20 @@ class ControllerVenda:
             quantidade = i.quantidadeVendida
             tamanho = list(filter(lambda x: x['produto'] == nome, produtos))
             if len(tamanho)>0:
-                produtos = list(map(lambda x: {'produto': nome, 'quantidade': x['quantidade'] + quantidade} 
+                produtos = list(map(lambda x: {'produto': nome, 'quantidade': int(x['quantidade']) + int(quantidade)} 
                 if (x['produto'] == nome) else (x), produtos))
             else:
-                produtos.append({'produto': nome, 'quantidade': quantidade})
+                produtos.append({'produto': nome, 'quantidade': int(quantidade)})
 
-            ordenado = sorted(produtos, key=lambda k: k['quantidade'], reverse=True)
+        ordenado = sorted(produtos, key=lambda k: k['quantidade'], reverse=True)
 
-            print('Esses são os produtos mais vendidods')
-            a = 1
-            for i in ordenado:
-                print(f'=========== Produto {a} ==========')
-                print(f"Produto: {i['produto']}\n"
-                      f"Quantidade: {i['quantidade']}\n")
-                a += 1
+        print('Esses são os produtos mais vendidods')
+        a = 1
+        for i in ordenado:
+            print(f'=========== Produto {a} ==========')
+            print(f"Produto: {i['produto']}\n"
+                    f"Quantidade: {i['quantidade']}\n")
+            a += 1
 
 a = ControllerVenda()
+a.relatorioDeProdutos()
