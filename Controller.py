@@ -1,6 +1,6 @@
 
-from DAO import DaoCategoria, DaoEstoque, DaoFornecedor, DaoPessoa, DaoVenda
-from Models import Categoria, Estoque, Fornecedor, Pessoa, Produtos, Venda
+from DAO import DaoCategoria, DaoEstoque, DaoFornecedor, DaoFuncionario, DaoPessoa, DaoVenda
+from Models import Categoria, Estoque, Fornecedor, Funcionario, Pessoa, Produtos, Venda
 from datetime import datetime
 
 
@@ -349,3 +349,71 @@ class ControllerCliente:
                   f"Endereço: {i.endereco}\n"
                   f"Email: {i.email}\n"
                   f"CPF: {i.cpf}")
+
+class ControllerFuncionario:
+    def cadastrarFuncionario(self, clt, nome, telefone, cpf, email, endereco):
+        x = DaoFuncionario.ler()
+
+        listaCpf = list(filter(lambda x: x.cpf == cpf, x))
+        listaClt = list(filter(lambda x: x.clt == clt, x))
+        if len(listaCpf) > 0:
+            print('CPF já existente')
+        elif len(listaClt) > 0:
+            print('Já existe um funcionario com essa clt')
+        else:
+            if len(cpf) == 11 and len(telefone) >= 10 and len(telefone) <=11:
+                DaoFuncionario.salvar(Funcionario(clt, nome, telefone, cpf, email, endereco))
+                print('Funcionario Cadastrado com sucesso')
+            else:
+                print('digite um cpf ou telefone válido')
+
+    def alterarFuncionario(self, nomeAlterar, novoClt, novoNome, novoTelefone, novoCpf, novoEmail, novoEndereco):
+        x = DaoFuncionario.ler()
+
+        est = list(filter(lambda x: x.nome == nomeAlterar, x))
+        if len(est) > 0:
+            x = list(map(lambda x: Funcionario(novoClt,novoNome, novoTelefone, novoCpf, novoEmail, novoEndereco) if (
+                    x.nome == nomeAlterar) else (x), x))
+        else:
+            print('O funcionario que deseja alterar nao existe')
+
+        with open('funcionarios.txt', 'w') as arq:
+            for i in x:
+                arq.writelines(i.clt + "|" + i.nome + "|" + i.telefone + "|" + i.cpf + "|" + i.email
+                               + "|" + i.endereco)
+                arq.writelines('\n')
+            print('funcionario alterado com sucesso')
+
+    def removerFuncionario(self, nome):
+        x = DaoFuncionario.ler()
+
+        est = list(filter(lambda x: x.nome == nome, x))
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del  x[i]
+                    break
+        else:
+            print('O funcionario que deseja remover não existe')
+            return None
+
+        with open('funcionarios.txt', 'w') as arq:
+            for i in x:
+                arq.writelines(i.nome + "|" + i.telefone + "|" + i.cpf + "|" + i.email + "|" + i.endereco)
+                arq.writelines('\n')
+            print('Funcionarios removido com sucesso')
+
+    def mostrarFuncionarios(self):
+        funcionario = DaoFuncionario.ler()
+
+        if len(funcionario) == 0:
+            print("Lista de funcionarios vazia")
+
+        for i in funcionario:
+            print("========Funcionario==========")
+            print(f"Nome: {i.nome}\n"
+                  f"Telefone: {i.telefone}\n"
+                  f"Email: {i.email}\n"
+                  f"Endereço: {i.endereco}\n"
+                  f"CPF: {i.cpf}\n"
+                  f"CLT: {i.clt}\n")
