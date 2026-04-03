@@ -30,13 +30,22 @@ class ControllerCategoria:
                     del x[i]
                     break
             print('Categoria removida com sucesso')
-            # TODO: colocar sem categoria no estoque
 
             with open('categoria.txt', 'w') as arq:
                 for i in x:
                     arq.writelines(i.categoria)
                     arq.writelines('\n')
 
+        estoque = DaoEstoque.ler()
+
+        estoque = list(map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, "Sem categoria"), x.quantidade) 
+                           if(x.produto.categoria == categoriaRemover) else (x), estoque))
+
+        with open('estoque.txt', 'w') as arq:
+            for i in estoque:
+                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
+                arq.writelines("\n")
+        
     def alterarCategoria(self, categoriaAlterar, categoriaAlterada):
         x = DaoCategoria.ler()
 
@@ -220,7 +229,6 @@ class ControllerVenda:
             cont += 1
 
         print(f"Total vendido: {total}")
-
 
 class ControllerFornecedor:
     def cadastrarFornecedor(self, nome, cnpj, telefone, categoria):
